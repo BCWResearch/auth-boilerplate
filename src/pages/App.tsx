@@ -1,45 +1,60 @@
 import './App.css';
-import logo from '@/assets/logo.svg';
-import { useState } from 'react';
+import Logo from '@/assets/generic/logo';
+import Button from '@/components/button';
+import GoogleLoginButton from '@/components/googleLogin';
+import Layout from '@/components/layout';
+import MicrosoftLoginButton from '@/components/microsoftLogin/microsoftLogin';
+import OrDivider from '@/components/orDivider';
+import TextField from '@/components/textfield';
+import Link from '@mui/material/Link';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 function App () {
-    const [count, setCount] = useState(0);
-
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>Hello Vite + React! Currently running in { import.meta.env.VITE_APP_ENV } </p>
-                <p>
-                    <button type="button" onClick={() => setCount((count) => count + 1)}>
-                        count is: {count}
-                    </button>
-                </p>
-                <p>
-                    Edit <code>App.tsx</code> and save to test HMR updates.
-                </p>
-                <p>
-                    <a
-                        className="App-link"
-                        href="https://reactjs.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
+        <Layout
+            logo={<Logo />}
+            sx={{
+                card: {
+                    minWidth: 350,
+                    maxWidth: 480,
+                }
+            }}
+        >
+            <Stack spacing={3}>
+                <Typography variant="h6" component="h1" textAlign={`center`}>
+                    Sign Up
+                </Typography>
+                <Stack spacing={1}>
+                    <TextField label="Email" variant="outlined" />
+                    <TextField label="Password" type="password" variant="outlined" />
+                </Stack>
+                <Button>
+                    Submit
+                </Button>
+                <OrDivider />
+                <Stack alignItems={`center`} spacing={2}>
+                    <MicrosoftLoginButton />
+                    <GoogleLoginButton />
+                </Stack>
+                <Stack direction="row" justifyContent={`space-between`}>
+                    <Link
+                        href="#"
+                        variant="subtitle2"
                     >
-                        Learn React
-                    </a>
-                    {` | `}
-                    <a
-                        className="App-link"
-                        href="https://vitejs.dev/guide/features.html"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        Forgot Password?
+                    </Link>
+                    <Link
+                        href="#"
+                        variant="subtitle2"
                     >
-                        Vite Docs
-                    </a>
-                </p>
-            </header>
-        </div>
+                        Sign In
+                    </Link>
+                </Stack>
+            </Stack>
+        </Layout>
     );
 }
 
 export default App;
+
