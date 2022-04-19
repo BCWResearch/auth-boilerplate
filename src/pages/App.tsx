@@ -1,45 +1,51 @@
 import './App.css';
-import logo from '@/assets/logo.svg';
-import { useState } from 'react';
+import Pin from './Pin';
+import Recover from './Recover';
+import RecoverPwd from './RecoverPwd';
+import SignIn from './SignIn';
+import SignInPwd from './SignInPwd';
+import SignUp from './SignUp';
+import Logo from '@/assets/generic/logo';
+import Layout from '@/components/layout';
+import {
+    Route,
+    Routes,
+    useLocation
+} from 'react-router-dom';
 
-function App () {
-    const [count, setCount] = useState(0);
+const WIDTH: Record<string, { minWidth: number, maxWidth: number }> = {
+    default: {
+        minWidth: 350, maxWidth: 480
+    },
+    "/pin": {
+        minWidth: 400, maxWidth: 600
+    },
+};
+
+export default function App () {
+    const { pathname } = useLocation();
+    console.log(pathname);
+    console.log(WIDTH[pathname]);
 
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>Hello Vite + React! Currently running in { import.meta.env.VITE_APP_ENV } </p>
-                <p>
-                    <button type="button" onClick={() => setCount((count) => count + 1)}>
-                        count is: {count}
-                    </button>
-                </p>
-                <p>
-                    Edit <code>App.tsx</code> and save to test HMR updates.
-                </p>
-                <p>
-                    <a
-                        className="App-link"
-                        href="https://reactjs.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Learn React
-                    </a>
-                    {` | `}
-                    <a
-                        className="App-link"
-                        href="https://vitejs.dev/guide/features.html"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Vite Docs
-                    </a>
-                </p>
-            </header>
-        </div>
+        <Routes>
+            <Route
+                path="/"
+                element={
+                    <Layout
+                        logo={<Logo />}
+                        sx={{ card: WIDTH[pathname] ?? WIDTH.default }}
+                    />
+                }
+            >
+                <Route index element={<SignIn />} />
+                <Route path="signin" element={<SignIn />} />
+                <Route path="signin/pwd" element={<SignInPwd />} />
+                <Route path="signup" element={<SignUp />} />
+                <Route path="recover" element={<Recover />} />
+                <Route path="recover/pwd" element={<RecoverPwd />} />
+                <Route path="pin" element={<Pin />} />
+            </Route>
+        </Routes>
     );
 }
-
-export default App;

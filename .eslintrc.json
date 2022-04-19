@@ -40,6 +40,7 @@
     ],
     "rules": {
         "brace-style": [ "error", "1tbs", { "allowSingleLine": true } ],
+        "eol-last": [ "error", "always" ],
         "function-call-argument-newline": [ "error", "consistent" ],
         "import/first": "error",
         "import/newline-after-import": "error",
@@ -96,6 +97,7 @@
                 "enforceForRenamedProperties": false
             }
         ],
+        "putout/align-spaces": "off",
         "putout/destructuring-as-function-argument": "warn",
         "putout/multiple-properties-destructuring": [
             "error",
@@ -103,6 +105,8 @@
                 "minProperties": 3
             }
         ],
+        "putout/objects-braces-inside-array": "off",
+        "putout/object-init": "off",
         "quote-props": [ "error", "as-needed" ],
         "react/jsx-closing-bracket-location": "error",
         "react/jsx-first-prop-new-line": 2,
@@ -123,6 +127,7 @@
             }
         ],
         "react/react-in-jsx-scope": "off",
+        "remove-unused-variables": "off",
         "semi": ["error", "always"],
         "space-before-function-paren": ["error", "always"],
         "simple-import-sort/imports": [
