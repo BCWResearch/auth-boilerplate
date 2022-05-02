@@ -1,22 +1,30 @@
 import BCWLogoLight from './bcw_logo_color.png';
 import BCWLogoDark from './bcw_logo_white.png';
 import atom from '@/atoms/atoms';
+import { CenteredContext } from '@/components/layout';
 import { styled } from '@mui/material/styles';
-import { useEffect, useState } from 'react';
+import {
+    useContext,
+    useEffect,
+    useState
+} from 'react';
 import { useRecoilValue } from 'recoil';
 
-const ImgLogo = styled(`img`)(() => ({
+const ImgLogo = styled(`img`)(({ theme }) => ({
     // flexGrow: 1,
     fontFamily: `Inter, -apple-system, Segoe UI, Helvetica, sans-serif`,
     objectFit: `contain`,
+    paddingBottom: theme.spacing(4),
 }));
 
-export default function Logo ({ height }: { height?: number | string}) {
-    const darkMode = useRecoilValue(atom.darkMode);
+export default function Logo ({ width, height }: { width?: number | string, height?: number | string }) {
     const {
         VITE_LOGO_LIGHT,
         VITE_LOGO_DARK
     } = import.meta.env;
+
+    const darkMode = useRecoilValue(atom.darkMode);
+    const isCentered = useContext(CenteredContext);
 
     const [ logo, setLogo ] = useState<string>(BCWLogoLight);
 
@@ -35,8 +43,8 @@ export default function Logo ({ height }: { height?: number | string}) {
         <ImgLogo
             src={logo}
             alt="BCW Group"
-            height={ height ?? 40 }
-        />
-    );
+            width={width ?? 150}
+            height={height ?? `auto`}
+            style={{ margin: isCentered ? `0 auto` : undefined }}
+        />);
 }
-
