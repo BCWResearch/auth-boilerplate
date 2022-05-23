@@ -1,6 +1,6 @@
 import atom from '@/atoms/atoms';
 import Button from '@/components/button';
-import { CenteredContext, UseSSOContext } from '@/components/layout';
+import { CenteredContext } from '@/components/layout';
 import TextField from '@/components/textfield';
 import useInterval from '@/hooks/useInterval';
 import Link from '@mui/material/Link';
@@ -17,7 +17,6 @@ import { useRecoilValue } from 'recoil';
 export default function SignInPwd () {
     const navigate = useNavigate();
     const isCentered = useContext(CenteredContext);
-    const { useGoogle, useMicrosoft } = useContext(UseSSOContext);
 
     const [ isLoading, setIsLoading ] = useState(false);
     const [ password, setPassword] = useState(``);
@@ -27,10 +26,9 @@ export default function SignInPwd () {
         setIsLoading(true);
     };
 
-    const handleCreateAccountNavigation = () => {
-        navigate(`/signup`);
+    const handleRecoverAccountNavigation = () => {
+        navigate(`/recover`);
     };
-
 
     useInterval(
         () => {
@@ -74,7 +72,7 @@ export default function SignInPwd () {
                 variant="subtitle2"
                 color="inherit"
                 align={isCentered ? `center` : `left`}
-                onClick={() => null}
+                onClick={handleRecoverAccountNavigation}
             >
                 Forgot Password?
             </Link>

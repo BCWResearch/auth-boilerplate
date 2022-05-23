@@ -1,3 +1,4 @@
+import atom from '@/atoms/atoms';
 import Button from '@/components/button';
 import GoogleLoginButton from '@/components/googleLogin';
 import { CenteredContext, UseSSOContext } from '@/components/layout';
@@ -5,63 +6,79 @@ import MicrosoftLoginButton from '@/components/microsoftLogin/microsoftLogin';
 import OrDivider from '@/components/orDivider';
 import TextField from '@/components/textfield';
 import useInterval from '@/hooks/useInterval';
-import Divider from '@mui/material/Divider';
-import Link from '@mui/material/Link';
+import { validateEmail } from '@/utils/validateEmail';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import React, {
     useContext,
-    useEffect,
     useState
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
-export default function SignUp () {
+export default function Recover () {
     const navigate = useNavigate();
     const isCentered = useContext(CenteredContext);
     const { useGoogle, useMicrosoft } = useContext(UseSSOContext);
 
     const [ isLoading, setIsLoading ] = useState(false);
-    const [ password, setPassword ] = useState(``);
-    const [ email, setEmail] = useState(``);
+    const [ errorMessage, setErrorMessage ] = useState(``);
+    const [ email, setEmail] = useRecoilState(atom.email);
 
     const handleContinue = () => {
         setIsLoading(true);
+        setErrorMessage(``);
+
+        if (!email) {
+            setErrorMessage(`Please enter an email address.`);
+            return;
+        }
+
+        const isValidEmail = validateEmail(email);
+        console.log(`isValidEmail`, isValidEmail);
+
+        if (!isValidEmail) {
+            setErrorMessage(`Please enter a valid email address.`);
+            return;
+        }
+
+        /* TODO: Implement login api handler
+         * Ensure that there is proper server-side email validation exists
+         * since javascript can be easily disabled in the browser
+         */
+
+        // setIsLoading(false);
+        // if (response.status === 404) {
+        //     setErrorMessage(`No account exists for this email. Please check your spelling or create an account.`);
+        // }
+        // navigate(`/signin/pwd`);
     };
 
-    const handleSignInNavigation = () => {
-        navigate(`/signin`);
-    };
-
+    // Remove upon proper handleContinue is implemented
     useInterval(
         () => {
             setIsLoading(false);
+
+            if (!errorMessage) {
+                navigate(`/signin/pwd`);
+            }
         },
         isLoading ? 1000 : null,
     );
 
-    useEffect(() => {
-        console.log(isLoading);
-    }, [isLoading]);
-
     return (
-        <Stack spacing={4}>
-            <Typography variant="h4" component="h1" textAlign={isCentered ? `center` : `left`}>
-                Sign Up
+        <Stack spacing={4} justifyContent="center">
+            <Typography variant="h4" component="h1" textAlign={`center`}>
+                Recover
             </Typography>
             <TextField
+                error={errorMessage !== ``}
                 label="Email"
                 variant="outlined"
                 value={email}
                 type="email"
+                helperText={errorMessage}
                 onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-                label="Password"
-                variant="outlined"
-                value={password}
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
             />
             <Stack spacing={2}>
                 <Button
@@ -69,7 +86,7 @@ export default function SignUp () {
                     loading={isLoading}
                     onClick={handleContinue}
                 >
-                    Submit
+                            Continue
                 </Button>
             </Stack>
             {
@@ -82,15 +99,6 @@ export default function SignUp () {
                     </Stack>
                 </React.Fragment>
             }
-            <Divider />
-            <Link
-                component="button"
-                variant="subtitle2"
-                color="inherit"
-                onClick={handleSignInNavigation}
-            >
-                Already have an account? Sign In
-            </Link>
         </Stack>
     );
 }

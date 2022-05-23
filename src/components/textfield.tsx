@@ -26,6 +26,7 @@ interface Props extends OutlinedTextFieldProps {
 
 export default function TextField (props: Props) {
     const {
+        helperText,
         isAccountButton,
         type,
         ...other
@@ -76,7 +77,6 @@ export default function TextField (props: Props) {
                                         onClick={() => navigate(`/signin`)}
                                     >
                                         <Tooltip
-                                            arrow
                                             placement="right-end"
                                             title="change email address"
                                         >
@@ -92,6 +92,7 @@ export default function TextField (props: Props) {
                         {...other}
                         type={type}
                         variant="outlined"
+                        helperText={helperText}
                     />
             )
     );

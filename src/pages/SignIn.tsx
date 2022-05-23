@@ -11,7 +11,6 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import React, {
     useContext,
-    useEffect,
     useState
 } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -28,6 +27,7 @@ export default function SignIn () {
 
     const handleContinue = () => {
         setIsLoading(true);
+        setErrorMessage(``);
 
         if (!email) {
             setErrorMessage(`Please enter an email address.`);
@@ -35,16 +35,18 @@ export default function SignIn () {
         }
 
         const isValidEmail = validateEmail(email);
+        console.log(`isValidEmail`, isValidEmail);
 
         if (!isValidEmail) {
             setErrorMessage(`Please enter a valid email address.`);
             return;
         }
 
-        /* Implement login api handler
+        /* TODO: Implement login api handler
          * Ensure that there is proper server-side email validation exists
          * since javascript can be easily disabled in the browser
          */
+
         // setIsLoading(false);
         // if (response.status === 404) {
         //     setErrorMessage(`No account exists for this email. Please check your spelling or create an account.`);
@@ -67,12 +69,6 @@ export default function SignIn () {
         },
         isLoading ? 1000 : null,
     );
-
-    useEffect(() => {
-        if (errorMessage) {
-            setErrorMessage(``);
-        }
-    }, [ email, errorMessage ]);
 
     return (
         <Stack spacing={4}>
