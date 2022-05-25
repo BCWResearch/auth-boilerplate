@@ -83,6 +83,7 @@ export default function SignIn () {
                 type="email"
                 helperText={errorMessage}
                 onChange={(e) => setEmail(e.target.value)}
+                onKeyDownEnter={ handleContinue }
             />
             <Stack spacing={2}>
                 <Button
@@ -90,7 +91,7 @@ export default function SignIn () {
                     loading={isLoading}
                     onClick={handleContinue}
                 >
-                            Continue
+                    Continue
                 </Button>
                 <Button
                     variant="outlined"

@@ -86,9 +86,10 @@ export default function Pin ({ flow = `signin`, callback }: { flow?:  `recover` 
             <Stack spacing={2}>
                 <AuthCode
                     allowedCharacters='numeric'
-                    isPassword={true}
+                    isPassword={flow === `signin`}
                     containerClassName='auth-container'
                     inputClassName='input'
+                    length={6}
                     onChange={handleAuthCode}
                 />
                 { errorMessage !== `` &&

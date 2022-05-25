@@ -66,6 +66,7 @@ export default function SignInPwd () {
                 value={password}
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDownEnter={ handleContinue }
             />
             <Link
                 component="button"

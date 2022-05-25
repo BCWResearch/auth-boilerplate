@@ -79,6 +79,7 @@ export default function Recover () {
                 type="email"
                 helperText={errorMessage}
                 onChange={(e) => setEmail(e.target.value)}
+                onKeyDownEnter={ handleContinue }
             />
             <Stack spacing={2}>
                 <Button

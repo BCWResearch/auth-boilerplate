@@ -22,12 +22,14 @@ const StyledTextField = styled(MuiTextField, { shouldForwardProp: (prop) => prop
 
 interface Props extends OutlinedTextFieldProps {
     isAccountButton?: boolean;
+    onKeyDownEnter?: () => void;
 }
 
 export default function TextField (props: Props) {
     const {
         helperText,
         isAccountButton,
+        onKeyDownEnter,
         type,
         ...other
     } = props;
@@ -62,6 +64,9 @@ export default function TextField (props: Props) {
                         </IconButton>
                     </InputAdornment>
                 }}
+                onKeyDown={(e) => {
+                    if (e.key === `Enter`) { onKeyDownEnter; };
+                }}
             /> :
             (
                 isAccountButton ?
@@ -94,6 +99,9 @@ export default function TextField (props: Props) {
                         type={type}
                         variant="outlined"
                         helperText={helperText}
+                        onKeyDown={(e) => {
+                            if (e.key === `Enter`) { onKeyDownEnter; };
+                        }}
                     />
             )
     );
