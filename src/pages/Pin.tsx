@@ -4,6 +4,7 @@ import useInterval from '@/hooks/useInterval';
 import { validateEmail } from '@/utils/validateEmail';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import Stack from '@mui/material/Stack';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import React, {
     useContext,
@@ -14,10 +15,11 @@ import { useNavigate } from 'react-router-dom';
 
 ;
 
-export default function Pin ({ flow = `signin`, callback }: { flow:  `recover` | `signin`, callback?: string }) {
+export default function Pin ({ flow = `signin`, callback }: { flow?:  `recover` | `signin`, callback?: string }) {
     const { VITE_APP_DESTINATION_ENDPOINT } = import.meta.env;
 
     const navigate = useNavigate();
+    const theme = useTheme();
     const isCentered = useContext(CenteredContext);
 
     const [ isLoading, setIsLoading ] = useState(false);
@@ -81,13 +83,24 @@ export default function Pin ({ flow = `signin`, callback }: { flow:  `recover` |
                     }
                 </Typography>
             </Stack>
-            <AuthCode
-                allowedCharacters='numeric'
-                isPassword={true}
-                containerClassName='auth-container'
-                inputClassName='input'
-                onChange={handleAuthCode}
-            />
+            <Stack spacing={2}>
+                <AuthCode
+                    allowedCharacters='numeric'
+                    isPassword={true}
+                    containerClassName='auth-container'
+                    inputClassName='input'
+                    onChange={handleAuthCode}
+                />
+                { errorMessage !== `` &&
+                <Typography
+                    variant="body2"
+                    textAlign="center"
+                    color={theme.palette.error.main}
+                >
+                    { errorMessage }
+                </Typography>
+                }
+            </Stack>
             <Stack spacing={2} alignItems="center">
                 <Button
                     fullWidth
@@ -95,7 +108,7 @@ export default function Pin ({ flow = `signin`, callback }: { flow:  `recover` |
                     loading={isLoading}
                     onClick={handleContinue}
                 >
-                        Continue
+                    Continue
                 </Button>
                 <Button
                     variant="text"

@@ -60,7 +60,7 @@ export default function Recover () {
             setIsLoading(false);
 
             if (!errorMessage) {
-                navigate(`/signin/pwd`);
+                navigate(`/recover/pwd`);
             }
         },
         isLoading ? 1000 : null,
@@ -68,7 +68,7 @@ export default function Recover () {
 
     return (
         <Stack spacing={4} justifyContent="center">
-            <Typography variant="h4" component="h1" textAlign={`center`}>
+            <Typography variant="h4" component="h1" textAlign={isCentered ? `center` : `left`}>
                 Recover
             </Typography>
             <TextField
@@ -86,7 +86,7 @@ export default function Recover () {
                     loading={isLoading}
                     onClick={handleContinue}
                 >
-                            Continue
+                    Continue
                 </Button>
             </Stack>
             {

@@ -47,6 +47,7 @@ export default function TextField (props: Props) {
         type === `password` ?
             <StyledTextField
                 {...other}
+                helperText={helperText}
                 type={isVisible ? `text` : `password`}
                 variant="outlined"
                 InputProps={{

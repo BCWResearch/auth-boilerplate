@@ -1,6 +1,7 @@
 import './App.css';
 import Pin from './Pin';
 import Recover from './Recover';
+import RecoverPwd from './RecoverPwd';
 import SignIn from './SignIn';
 import SignInPwd from './SignInPwd';
 import SignUp from './SignUp';
@@ -42,6 +43,7 @@ export default function App () {
                 <Route path="signin/pwd" element={<SignInPwd />} />
                 <Route path="signup" element={<SignUp />} />
                 <Route path="recover" element={<Recover />} />
+                <Route path="recover/pwd" element={<RecoverPwd />} />
                 <Route path="pin" element={<Pin />} />
             </Route>
         </Routes>
