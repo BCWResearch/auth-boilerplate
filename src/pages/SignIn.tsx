@@ -35,7 +35,6 @@ export default function SignIn () {
         }
 
         const isValidEmail = validateEmail(email);
-        console.log(`isValidEmail`, isValidEmail);
 
         if (!isValidEmail) {
             setErrorMessage(`Please enter a valid email address.`);
@@ -94,6 +93,7 @@ export default function SignIn () {
                     Continue
                 </Button>
                 <Button
+                    disabled
                     variant="outlined"
                     sx={{ height: 56 }}
                     onClick={handleCreateAccountNavigation}

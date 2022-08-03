@@ -1,11 +1,14 @@
+import { UserService } from '@/api/api';
 import atom from '@/atoms/atoms';
 import Button from '@/components/button';
 import { CenteredContext } from '@/components/layout';
 import TextField from '@/components/textfield';
 import useInterval from '@/hooks/useInterval';
+import Alert from '@mui/material/Alert';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { AxiosError, AxiosResponse } from 'axios';
 import React, {
     useContext,
     useEffect,
@@ -20,10 +23,38 @@ export default function SignInPwd () {
 
     const [ isLoading, setIsLoading ] = useState(false);
     const [ password, setPassword] = useState(``);
+    const [ errorMessage, setErrorMessage ] = useState(``);
     const email = useRecoilValue(atom.email);
 
     const handleContinue = () => {
         setIsLoading(true);
+
+        if (!email) {
+            setErrorMessage(`An email was not provided. Please go back and try again.`);
+            return;
+        }
+
+        if (!password) {
+            setErrorMessage(`Please enter a password.`);
+            return;
+        }
+
+        UserService.signIn({
+            email,
+            password
+        }).then((response: AxiosResponse) => {
+            console.log(`Request to /login received a response: `, response);
+
+            UserService.success().then((response: AxiosResponse) => {
+                console.log(`Request to /success received a response: `, response);
+            }).catch((reason: AxiosError) => {
+                setErrorMessage(`Request to /success returned an error, please check the console.`);
+                console.error(reason);
+            });
+        }).catch((reason: AxiosError) => {
+            setErrorMessage(`Request to /login returned an error, please check the console.`);
+            console.error(reason);
+        });
     };
 
     const handleRecoverAccountNavigation = () => {
@@ -52,6 +83,12 @@ export default function SignInPwd () {
             <Typography variant="h4" component="h1" textAlign={isCentered ? `center` : `left`}>
                 Welcome
             </Typography>
+            {
+                errorMessage &&
+                    <Alert severity="error" icon={false}>
+                        { errorMessage }
+                    </Alert>
+            }
             <TextField
                 isAccountButton
                 disabled
@@ -69,10 +106,12 @@ export default function SignInPwd () {
                 onKeyDownEnter={ handleContinue }
             />
             <Link
+                disabled
                 component="button"
                 variant="subtitle2"
                 color="inherit"
                 align={isCentered ? `center` : `left`}
+                sx={{ cursor: `not-allowed` }}
                 onClick={handleRecoverAccountNavigation}
             >
                 Forgot Password?
@@ -89,3 +128,6 @@ export default function SignInPwd () {
         </Stack>
     );
 }
+
+
+

@@ -26,6 +26,7 @@
     "@mui/lab": "^5.0.0-alpha.66",
     "@mui/material": "^5.3.1",
     "@universemc/react-palette": "^1.0.3",
+    "axios": "^0.27.2",
     "immer": "^9.0.12",
     "make-plural": "^7.0.0",
     "node-vibrant": "^3.2.1-alpha.1",

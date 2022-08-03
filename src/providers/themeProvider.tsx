@@ -22,7 +22,7 @@ export default function ThemeProvider ({ children }: { children: JSX.Element }) 
     const { data } = usePalette(VITE_LOGO_LIGHT ? `https://cors-anywhere.herokuapp.com/${imageUrl}` : BCWLogoLight);
 
     const theme = useMemo(() => {
-        const shape = { borderRadius: 12 };
+        const shape = { borderRadius: 32 };
         
         const basicTheme = createTheme({
             components: Overrides(darkMode),

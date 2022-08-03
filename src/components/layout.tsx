@@ -83,7 +83,7 @@ export default function Layout (props: Props) {
                     }}
                 >
                     <Container maxWidth={maxWidth ?? false} sx={{ ...sx?.card }}>
-                        <Card variant="outlined">
+                        <Card variant="outlined" sx={{ borderRadius: `12px` }}>
                             <CardContent sx={{ p: `${theme.spacing(6, 5)} !important` }}>
                                 <Stack spacing={1}>
                                     { logo }
